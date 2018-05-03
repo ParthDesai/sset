@@ -85,6 +85,7 @@ func (s *SkipList) generateRandLevel() int {
 
 // DeleteOrModify either deletes entire node OR deletes one of the value
 // This is determined by function reference passed to it.
+// Time complexity: O(log n)
 func (s *SkipList) DeleteOrModify(key int,
 	modifyOrDelete func(map[string]bool) (bool, map[string]bool)) bool {
 
@@ -141,6 +142,7 @@ func (s *SkipList) DeleteOrModify(key int,
 
 // SearchRange searches skiplist and finds node which has key less than
 // keyMax, and greater than or equal to keyMin
+// Time complexity: O((log n) + r) where r is number of elements in the range
 func (s *SkipList) SearchRange(keyMin, keyMax int) []map[string]bool {
 
 	if keyMin < s.minKey || keyMax < s.minKey {
@@ -187,6 +189,7 @@ func (s *SkipList) SearchRange(keyMin, keyMax int) []map[string]bool {
 
 // SearchOrModify searches skiplist for element
 // You can also supply a function, that can be used to modifiy searched values
+// Time complexity: O(log n)
 func (s *SkipList) SearchOrModify(key int,
 	modifier func(map[string]bool) map[string]bool) map[string]bool {
 
@@ -219,6 +222,7 @@ func (s *SkipList) SearchOrModify(key int,
 // AddOrModify adds new node to skiplist if it does not exists,
 // if it is you can supply modifier function that can be used to modify value
 // of existing node
+// Time complexity: O(log n)
 func (s *SkipList) AddOrModify(key int, value map[string]bool,
 	modifier func(map[string]bool) map[string]bool) {
 

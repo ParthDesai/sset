@@ -28,7 +28,8 @@ func (s *SortedSet) Init() {
 }
 
 // Add adds a string element to sorted set, with rank indicated by
-// rank parameter
+// rank parameter.
+//Time complexity: O(log n)
 func (s *SortedSet) Add(member string, rank int) bool {
 
 	if rank < 0 {
@@ -52,6 +53,7 @@ func (s *SortedSet) Add(member string, rank int) bool {
 }
 
 // Remove Removes member from sorted set
+// Time complexity: O(log n)
 func (s *SortedSet) Remove(member string) bool {
 	s.rwMutex.Lock()
 	defer s.rwMutex.Unlock()
@@ -77,6 +79,7 @@ func (s *SortedSet) Remove(member string) bool {
 }
 
 // Get gets member(s) with given rank
+// time complexity: O(log n)
 func (s *SortedSet) Get(rank int) []string {
 	if rank < 0 {
 		panic("Rank must be greater than or equal to zero")
@@ -99,6 +102,7 @@ func (s *SortedSet) Get(rank int) []string {
 
 // GetRange returns all members with rank in between rankMin and rankMax
 // rankMin is inclusive
+// Time complexity: O(log(n) + r) where r is number of element being returned
 func (s *SortedSet) GetRange(rankMin, rankMax int) []string {
 	if rankMin < 0 || rankMax < 0 {
 		panic("rankMin and rankMax must be greater than equal to zero")
@@ -131,6 +135,7 @@ func (s *SortedSet) GetRange(rankMin, rankMax int) []string {
 }
 
 // Exists check for membership of member in sorted set
+// Time complexity: O(1)
 func (s *SortedSet) Exists(member string) bool {
 	s.rwMutex.RLock()
 	defer s.rwMutex.RUnlock()
@@ -140,6 +145,7 @@ func (s *SortedSet) Exists(member string) bool {
 }
 
 // GetRank gives rank of member
+// Time complexity: O(1)
 func (s *SortedSet) GetRank(member string) int {
 	s.rwMutex.RLock()
 	defer s.rwMutex.RUnlock()

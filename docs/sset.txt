@@ -1,0 +1,47 @@
+use 'godoc cmd/github.com/parthdesai/sset' for documentation on the github.com/parthdesai/sset command 
+
+PACKAGE DOCUMENTATION
+
+package sset
+    import "github.com/parthdesai/sset"
+
+
+TYPES
+
+type SortedSet struct {
+    // contains filtered or unexported fields
+}
+    SortedSet struct represent sorted set abstract data structure Under the
+    hood, it uses skiplist and dict for sorted set functionality and Read
+    write mutex for thread safe operation
+
+func (s *SortedSet) Add(member string, rank int) bool
+    Add adds a string element to sorted set, with rank indicated by rank
+    parameter. Time complexity: O(log n)
+
+func (s *SortedSet) Exists(member string) bool
+    Exists check for membership of member in sorted set Time complexity:
+    O(1)
+
+func (s *SortedSet) Get(rank int) []string
+    Get gets member(s) with given rank time complexity: O(log n)
+
+func (s *SortedSet) GetRange(rankMin, rankMax int) []string
+    GetRange returns all members with rank in between rankMin and rankMax
+    rankMin is inclusive Time complexity: O(log(n) + r) where r is number of
+    element being returned
+
+func (s *SortedSet) GetRank(member string) int
+    GetRank gives rank of member Time complexity: O(1)
+
+func (s *SortedSet) Init()
+    Init Initiates sorted set.
+
+func (s *SortedSet) Remove(member string) bool
+    Remove Removes member from sorted set Time complexity: O(log n)
+
+SUBDIRECTORIES
+
+	docs
+	internals
+

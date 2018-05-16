@@ -1,0 +1,67 @@
+use 'godoc cmd/github.com/parthdesai/sset/internals' for documentation on the github.com/parthdesai/sset/internals command 
+
+PACKAGE DOCUMENTATION
+
+package internals
+    import "github.com/parthdesai/sset/internals"
+
+
+TYPES
+
+type Dictionary map[string]int
+    Dictionary provides efficient lookup of element against its rank It is
+    useful for operation that does not require accessing skiplist
+
+type Node struct {
+    Next   []*Node
+    Key    int
+    Values map[string]bool
+}
+    Node represents individual node in skiplist with unique key Each node
+    have at max maxLevels of pointer to next node Values is map due to
+    efficiency of checking whether value exists in particular node or not.
+
+type SkipList struct {
+    // contains filtered or unexported fields
+}
+    SkipList is one of underlying data structure of sorted set It has very
+    high probability O(log n) insert, lookup and delete It consists of n
+    number of node, each one with maxLevels pointer Pointer at each level
+    point to next node at that level Due to power-alike arrnagement of node
+    (from higher level to lower level), Each level can act as express way
+    for level below it, thus enabling O(log n) probability.
+
+func (s *SkipList) AddOrModify(key int, value map[string]bool,
+    modifier func(map[string]bool) map[string]bool)
+    AddOrModify adds new node to skiplist if it does not exists, if it is
+    you can supply modifier function that can be used to modify value of
+    existing node Time complexity: O(log n)
+
+func (s *SkipList) DebugPrint() []string
+    DebugPrint returns array of string, that gives you information about
+    node position and levels
+
+func (s *SkipList) DeleteOrModify(key int,
+    modifyOrDelete func(map[string]bool) (bool, map[string]bool)) bool
+    DeleteOrModify either deletes entire node OR deletes one of the value
+    This is determined by function reference passed to it. Time complexity:
+    O(log n)
+
+func (s *SkipList) Init(maxLevels int, levelJumpProbability float32, minKey int)
+    Init Initiates skip list, with maximum number of level supported
+    levelJumpProbability indicates the probability by which node in level i,
+    can be also present at level i - 1 minKey restricts key space to
+    [minKey, MAX_INT)
+
+func (s *SkipList) SearchOrModify(key int,
+    modifier func(map[string]bool) map[string]bool) map[string]bool
+    SearchOrModify searches skiplist for element You can also supply a
+    function, that can be used to modifiy searched values Time complexity:
+    O(log n)
+
+func (s *SkipList) SearchRange(keyMin, keyMax int) []map[string]bool
+    SearchRange searches skiplist and finds node which has key less than
+    keyMax, and greater than or equal to keyMin Time complexity: O((log n) +
+    r) where r is number of elements in the range
+
+
